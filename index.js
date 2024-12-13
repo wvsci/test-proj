@@ -1,39 +1,52 @@
-/* Индекс слайда по умолчанию */
-var slideIndex = 2;
-showSlides(slideIndex);
+document.addEventListener('contextmenu', (event) => {
+  if (!event.target.matches('input')) {
+    event.preventDefault();
+  }
+});
 
-/* Функция увеличивает индекс на 1, показывает следующй слайд*/
-function plusSlide() {
-    showSlides(slideIndex += 1);
-}
+document.addEventListener('copy', (event) => {
+  if (!event.target.matches('input')) {
+    event.preventDefault();
+  }
+});
 
-/* Функция уменьшяет индекс на 1, показывает предыдущий слайд*/
-function minusSlide() {
-    showSlides(slideIndex -= 1);
-}
+document.addEventListener('selectstart', (event) => {
+  if (!event.target.matches('input')) {
+    event.preventDefault();
+  }
+});
 
-/* Устанавливает текущий слайд */
-function currentSlide(n) {
-    showSlides(slideIndex = n);
-}
+document.addEventListener('mouseup', (event) => {
+  if (!event.target.matches('input')) {
+    window.getSelection().removeAllRanges();
+  }
+});
 
-/* Основная функция слайдера */
-function showSlides(n) {
-    let i;
-    const slides = document.getElementsByClassName("item");
-    const dots = document.getElementsByClassName("slider-dots_item");
-    if (n > slides.length) {
-        slideIndex = 1
-    }
-    if (n < 1) {
-        slideIndex = slides.length
-    }
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-    for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-    }
-    slides[slideIndex - 1].style.display = "block";
-    dots[slideIndex - 1].className += " active";
-}
+document.addEventListener('keydown', (event) => {
+  const keyCode = event.keyCode || event.which;
+
+  if (
+    !event.target.matches('input') &&
+    ((event.ctrlKey && keyCode === 67) ||
+      (event.ctrlKey && keyCode === 86) ||
+      (event.ctrlKey && keyCode === 85) ||
+      (event.ctrlKey && keyCode === 83) ||
+      (event.ctrlKey && keyCode === 80) ||
+      (event.metaKey && keyCode === 79) ||
+      (event.metaKey && keyCode === 73) ||
+      (event.metaKey && keyCode === 74) ||
+      (event.shiftKey && keyCode === 123) ||
+      (event.altKey && keyCode === 115) ||
+      (event.altKey && keyCode === 82) ||
+      event.keyCode === 123)
+  ) {
+    event.preventDefault();
+  }
+});
+
+document.querySelectorAll('img').forEach((img) => {
+  img.addEventListener('dragstart', (event) => {
+    event.preventDefault();
+  });
+  img.ondragstart = () => false;
+});
